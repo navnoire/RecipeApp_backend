@@ -16,6 +16,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
@@ -53,7 +54,7 @@ public class SchedulerConfig {
     @Bean
     public Properties quartzProperties() throws IOException {
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-        propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
+        propertiesFactoryBean.setLocation(new ClassPathResource("quartz.properties"));
         propertiesFactoryBean.afterPropertiesSet();
         return propertiesFactoryBean.getObject();
     }
@@ -67,14 +68,14 @@ public class SchedulerConfig {
         return factoryBean;
     }
 
-    static SimpleTriggerFactoryBean createTrigger(JobDetail jobDetail, long pollFrequencyMs, String triggerName) {
-        LOG.debug("Called createTrigger(jobDetail={}, pollFrequency={},triggerName={}", jobDetail.toString(), pollFrequencyMs, triggerName);
+    public static SimpleTriggerFactoryBean createSimpleTrigger(JobDetail jobDetail, String triggerName) {
+        LOG.debug("Called createTrigger(jobDetail={},triggerName={}", jobDetail.toString(), triggerName);
         SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
         factoryBean.setJobDetail(jobDetail);
         factoryBean.setStartDelay(0L);
-        factoryBean.setRepeatInterval(pollFrequencyMs);
         factoryBean.setName(triggerName);
-        factoryBean.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+        factoryBean.setStartTime(new Date(System.currentTimeMillis() + (10 * 60 * 1000)));
+        factoryBean.setRepeatCount(1);
         factoryBean.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT);
         return factoryBean;
     }

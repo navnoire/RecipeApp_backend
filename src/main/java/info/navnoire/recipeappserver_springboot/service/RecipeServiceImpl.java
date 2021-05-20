@@ -59,14 +59,9 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void ScrapeRecipesInCategory(int category_id) throws JobExecutionException {
+    public void ScrapeRecipesInCategory(int category_id) throws IOException {
         List<Recipe> recipes;
-        try {
-            recipes = recipeScraper.scrapeByCategory(category_id);
-        } catch (IOException ex) {
-            LOG.error("Can't scrape category " + category_id + ". URL is unreachable. Nothing saved.", ex);
-            throw  new JobExecutionException(ex, false);
-        }
+        recipes = recipeScraper.scrapeByCategory(category_id);
         recipeRepository.saveAll(recipes);
     }
 

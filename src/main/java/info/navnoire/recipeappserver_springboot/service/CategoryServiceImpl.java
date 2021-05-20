@@ -41,13 +41,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void scrapeAllCategories() throws JobExecutionException {
+    public void scrapeAllCategories() throws IOException {
         List<Category> allCategories;
-        try {
-            allCategories = categoryTreeScraper.scrapeAll();
-        } catch (IOException ioe) {
-            throw new JobExecutionException(ioe);
-        }
+        allCategories = categoryTreeScraper.scrapeAll();
         allCategories.forEach(this::save);
     }
 

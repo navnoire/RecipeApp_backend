@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 /**
  * Created by Victoria Berezina on 18/05/2021 in RecipeAppServer_SpringBoot project
  */
@@ -23,10 +25,14 @@ public class RecipeByCategoryScrapeJob implements Job {
     }
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         LOG.info("Job ** {} ** starting @ {} in {}", context.getJobDetail().getKey().getName(), context.getFireTime(), Thread.currentThread().getName());
        int category_id = context.getTrigger().getJobDataMap().getInt("category_id");
-       recipeService.ScrapeRecipesInCategory(category_id);
+        try {
+            recipeService.ScrapeRecipesInCategory(category_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         LOG.info("Job ** {} ** completed.  Next job scheduled @ {}", context.getJobDetail().getKey().getName(), context.getNextFireTime());
     }
 }

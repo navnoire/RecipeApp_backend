@@ -20,7 +20,7 @@ public class QuartzStartupJobs {
     private static final String CRON_EVERY_FIVE_MINUTES = "0 0/5 * ? * * *";
     private static final String CRON_EVERY_THIRTY_MINUTES = "0 0/30 * ? * * *";
     private static final String CRON_EVERY_THREE_HOURS_START_AT_16 = "0 0 16/3 ? * * *";
-    private static final String CRON_EVERY_DAY_AT_7_AM = "0 0 7 * * ?";
+    private static final String CRON_EVERY_DAY_AT_7_AM = "0 50 16 * * ?";
     private static final String CRON_EVERY_DAY_AT_8_AM = "0 0 8 * * ?";
     private static final String CRON_EVERY_DAY_AT_MIDNIGHT = "0 0 0 * * ?";
 
@@ -43,6 +43,8 @@ public class QuartzStartupJobs {
     public CronTriggerFactoryBean jobScrapeRecipesInCategory1(@Qualifier("recipeByCategoryScrape") JobDetail jobDetail) {
         Map<String, Integer> data = new HashMap<>();
         data.put("category_id", 1);
-       return SchedulerConfig.createCronTriggerWithData(jobDetail, CRON_EVERY_THREE_HOURS_START_AT_16, "Recipe by category scrape trigger", data);
+       return SchedulerConfig.createCronTriggerWithData(jobDetail, CRON_EVERY_DAY_AT_8_AM, "Recipe by category scrape trigger", data);
     }
+
+
 }

@@ -5,6 +5,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface RecipeService {
     Page<Recipe> findByTitlePage(String title, Pageable pageable);
     Page<Recipe> findAllPage(Pageable pageable);
 
-    void ScrapeRecipesInCategory(int category_id) throws JobExecutionException;
+    void ScrapeRecipesInCategory(int category_id) throws IOException;
 
     void save(Recipe recipe);
     void delete(int id);
