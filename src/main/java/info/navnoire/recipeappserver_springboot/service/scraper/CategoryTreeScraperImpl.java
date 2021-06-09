@@ -27,8 +27,11 @@ public class CategoryTreeScraperImpl implements CategoryTreeScraper {
             List<Category> newCategories = fetchCategories(urlQueue.poll(), false);
             urlQueue.addAll(getUrls(newCategories));
             initialCategories.addAll(newCategories);
-            System.out.println("Queue = " + urlQueue.size() + " elements");
         }
+
+        initialCategories.forEach(category ->
+                category.setHasChild(initialCategories.stream().anyMatch(c ->
+                        c.getParent_id().equals(category.getId()))));
         return initialCategories;
     }
 
@@ -66,6 +69,9 @@ public class CategoryTreeScraperImpl implements CategoryTreeScraper {
         String catUrl = categoryElement.absUrl("href");
         category.setCategory_url(catUrl);
         category.setId(extractId(catUrl));
+        if(category.getId() == 68) {
+            category.setCategory_url("https://gotovim-doma.ru/category/68-zagotovki-na-zimu");
+        }
         category.setTitle(categoryElement.text());
         return category;
     }

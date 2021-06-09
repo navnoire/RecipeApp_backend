@@ -17,6 +17,7 @@ public class Category {
     private String title;
     private Integer parent_id;
     private String category_url;
+    private boolean hasChild;
 
     private Set<Recipe> recipes = new HashSet<>();
 
@@ -43,6 +44,7 @@ public class Category {
     }
 
     @Column(name = "parent_id")
+    @JsonIgnore
     public Integer getParent_id() {
         return parent_id;
     }
@@ -69,6 +71,15 @@ public class Category {
 
     public void setRecipes(Set<Recipe> recipes) {
         this.recipes = recipes;
+    }
+
+    @Column(name = "has_child", nullable = false, columnDefinition = "TINYINT(1)")
+    public boolean isHasChild() {
+        return hasChild;
+    }
+
+    public void setHasChild(boolean hasChild) {
+        this.hasChild = hasChild;
     }
 
     @Override

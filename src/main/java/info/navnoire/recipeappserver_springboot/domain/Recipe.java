@@ -56,6 +56,7 @@ public class Recipe {
     }
 
     @Column(name = "main_image_url")
+    @JsonIgnore
     public String getMain_image_url() {
         return main_image_url;
     }

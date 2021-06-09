@@ -1,6 +1,11 @@
 package info.navnoire.recipeappserver_springboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -32,6 +37,7 @@ public class Step {
     }
 
     @Column(name = "image_url")
+    @JsonIgnore
     public String getImageUrl() {
         return imageUrl;
     }
@@ -47,6 +53,12 @@ public class Step {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Transient
+    @JsonInclude
+    public boolean getImageExists() {
+        return imageUrl != null;
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

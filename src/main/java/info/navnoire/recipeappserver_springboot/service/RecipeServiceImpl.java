@@ -6,14 +6,15 @@ import info.navnoire.recipeappserver_springboot.service.scraper.RecipeScraper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
-import org.quartz.JobExecutionException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Victoria Berezina on 07/05/2021 in RecipesAppServer project
@@ -25,19 +26,25 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final RecipeScraper recipeScraper;
+    private final ImageService imageService;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeScraper recipeScraper) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeScraper recipeScraper, ImageService imageService) {
         this.recipeRepository = recipeRepository;
         this.recipeScraper = recipeScraper;
+        this.imageService = imageService;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Recipe findFullRecipeById(int id) {
+    public Recipe findFullRecipeById(int id) throws NoSuchElementException {
         Recipe recipe = recipeRepository.findById(id);
-        Hibernate.initialize(recipe.getIngredients());
-        Hibernate.initialize(recipe.getSteps());
-        return recipe;
+        try {
+            Hibernate.initialize(recipe.getIngredients());
+            Hibernate.initialize(recipe.getSteps());
+            return recipe;
+        } catch (NullPointerException npe) {
+            throw new NoSuchElementException("Recipe " + id + " does not exists.");
+        }
     }
 
     @Override
@@ -48,21 +55,27 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Recipe> findAllPage(Pageable pageable) {
+    public Slice<Recipe> findAllPage(Pageable pageable) {
         return recipeRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Recipe> findByCategoryPage(int id, Pageable pageable) {
+    public Slice<Recipe> findByCategoryPage(int id, Pageable pageable) {
         return recipeRepository.findByCategory(id, pageable);
     }
 
     @Override
-    public void ScrapeRecipesInCategory(int category_id) throws IOException {
+    public List<Recipe> scrapeRecipesInCategory(int category_id) throws IOException {
         List<Recipe> recipes;
         recipes = recipeScraper.scrapeByCategory(category_id);
-        recipeRepository.saveAll(recipes);
+        recipes.forEach(this::save);
+        return recipes;
+    }
+
+    @Override
+    public Recipe scrapeSingleRecipe(String url, int id) throws IOException {
+        return recipeScraper.scrapeSingleRecipe(url,id);
     }
 
     @Override

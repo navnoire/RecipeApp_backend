@@ -22,7 +22,7 @@ public interface Scraper {
     }
 
     default Integer extractId(String string) {
-        string = string.replace("https://gotovim-doma.ru/recipe/", "");
+        string = string.replace("https://gotovim-doma.ru/", "");
         int index = string.indexOf('-');
         if (index != -1) string = string.substring(0, index);
         try {

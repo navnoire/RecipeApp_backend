@@ -5,16 +5,19 @@ import info.navnoire.recipeappserver_springboot.domain.Ingredient;
 import info.navnoire.recipeappserver_springboot.domain.Recipe;
 import info.navnoire.recipeappserver_springboot.domain.Step;
 import info.navnoire.recipeappserver_springboot.repository.CategoryRepository;
+import info.navnoire.recipeappserver_springboot.repository.RecipeRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Victoria Berezina on 01/05/2021 in Scrapers project
@@ -24,27 +27,30 @@ public class RecipeScraperImpl implements RecipeScraper {
     private static final Log LOG = LogFactory.getLog(RecipeScraperImpl.class);
 
     private final CategoryRepository categoryRepository;
+    private final RecipeRepository recipeRepository;
 
-    public RecipeScraperImpl(CategoryRepository categoryRepository) {
+    public RecipeScraperImpl(CategoryRepository categoryRepository, RecipeRepository recipeRepository) {
         this.categoryRepository = categoryRepository;
+        this.recipeRepository = recipeRepository;
     }
 
     @Override
-    public Recipe scrapeSingleRecipe(String url) throws IOException {
-        LOG.info("Scraping " + url + " in " + Thread.currentThread().getName());
+    public Recipe scrapeSingleRecipe(String url, int id) throws IOException {
+        LOG.debug("Scraping " + url + " in " + Thread.currentThread().getName());
         Document document = getDocument(url);
 
         Recipe recipe = new Recipe();
-        recipe.setId(extractId(url));
+        recipe.setId(id);
         recipe.setTitle(document.select("h1")
                 .text()
-                .replaceAll("[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]",""));
+                .replaceAll("[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]", ""));
         recipe.setBody_url(url);
 
         //ingredients set
         Element ingredientContainer = document.getElementsByClass("recept-table").first();
         for (Element row : ingredientContainer.select("tr")) {
             Ingredient ingredient = new Ingredient();
+            ingredient.setType(row.select("th").hasAttr("colspan")?1:0);
             ingredient.setName(row.select("th").text());
             ingredient.setAmount(row.select("td").text());
             ingredient.setRecipe(recipe);
@@ -66,13 +72,21 @@ public class RecipeScraperImpl implements RecipeScraper {
         Element stepContainer = document.getElementsByAttributeValue("itemprop", "recipeInstructions").first();
         for (Element s : stepContainer.getElementsByClass("step")) {
             Step step = new Step();
-            step.setText(s.text());
+            Elements par = s.select("p");
+            StringBuilder resultText = new StringBuilder();
+            for (Element p : par) {
+                p.select("[src]").forEach(Element::remove);
+                p.select("[href]").forEach(Element::remove);
+                resultText.append(p.html().replace("<br>", "\n"));
+            }
+            step.setText(resultText.toString());
 
             Element fancybox = s.getElementsByClass("fancybox").first();
             if (fancybox != null) {
                 step.setImageUrl(fancybox.absUrl("href")
                         .replace("https://gotovim-doma.ru/images/recipe/", "")
                         .replace(".", "_m."));
+
             }
             step.setRecipe(recipe);
             recipe.getSteps().add(step);
@@ -113,7 +127,7 @@ public class RecipeScraperImpl implements RecipeScraper {
         return lastPage;
     }
 
-    private List<Recipe> scrapePage(Document document) {
+    private List<Recipe> scrapePage(Document document) throws IOException {
         Elements elements = document.getElementsByClass("recept-item-img");
         List<String> urls = new ArrayList<>();
         for (Element e : elements) {
@@ -121,12 +135,10 @@ public class RecipeScraperImpl implements RecipeScraper {
         }
         List<Recipe> recipes = new ArrayList<>();
         for (String u : urls) {
-            try {
-                Recipe recipe = scrapeSingleRecipe(u);
+            int id = extractId(u);
+            if (!recipeRepository.existsById(id)) {
+                Recipe recipe = scrapeSingleRecipe(u, id);
                 recipes.add(recipe);
-            } catch (IOException ioe) {
-                LOG.error(ioe.getMessage());
-                ioe.printStackTrace();
             }
         }
         return recipes;

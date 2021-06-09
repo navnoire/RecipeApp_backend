@@ -10,6 +10,6 @@ import java.util.List;
  * Created by Victoria Berezina on 14/05/2021 in RecipeAppServer_SpringBoot project
  */
 public interface RecipeScraper extends Scraper {
-    Recipe scrapeSingleRecipe(String url) throws IOException;
-    List<Recipe> scrapeByCategory(int category_idy) throws IOException;
+    Recipe scrapeSingleRecipe(String url, int id) throws IOException;
+    List<Recipe> scrapeByCategory(int category_id) throws IOException;
 }

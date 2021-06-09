@@ -13,11 +13,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.Map;
 import java.util.Properties;
 
 @Configuration
@@ -37,18 +34,17 @@ public class SchedulerConfig {
         return jobFactory;
     }
 
-    @Bean
-    public Scheduler scheduler(Trigger... triggers) throws Exception {
+    @Bean(destroyMethod = "destroy")
+    public SchedulerFactoryBean scheduler(Trigger trigger, JobDetail... jobs) throws Exception {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         factory.setJobFactory(jobFactory());
+        factory.setWaitForJobsToCompleteOnShutdown(false);
         factory.setQuartzProperties(quartzProperties());
-        factory.setAutoStartup(true);
-        factory.setWaitForJobsToCompleteOnShutdown(true);
-        if (ArrayUtils.isNotEmpty(triggers)) {
-            factory.setTriggers(triggers);
+        if (ArrayUtils.isNotEmpty(jobs)) {
+            factory.setJobDetails(jobs);
         }
-        factory.afterPropertiesSet();
-        return factory.getScheduler();
+        factory.setTriggers(trigger);
+        return factory;
     }
 
     @Bean
@@ -59,24 +55,13 @@ public class SchedulerConfig {
         return propertiesFactoryBean.getObject();
     }
 
-    static JobDetailFactoryBean createJobDetail(Class<? extends Job> jobClass, String jobName) {
+    static JobDetailFactoryBean createJobDetail(Class<? extends Job> jobClass, String jobName, JobDataMap map) {
         LOG.debug("createJobDetail(jobClass={}, jobName={})", jobClass.getName(), jobName);
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
         factoryBean.setName(jobName);
+        factoryBean.setJobDataMap(map);
         factoryBean.setJobClass(jobClass);
         factoryBean.setDurability(true);
-        return factoryBean;
-    }
-
-    public static SimpleTriggerFactoryBean createSimpleTrigger(JobDetail jobDetail, String triggerName) {
-        LOG.debug("Called createTrigger(jobDetail={},triggerName={}", jobDetail.toString(), triggerName);
-        SimpleTriggerFactoryBean factoryBean = new SimpleTriggerFactoryBean();
-        factoryBean.setJobDetail(jobDetail);
-        factoryBean.setStartDelay(0L);
-        factoryBean.setName(triggerName);
-        factoryBean.setStartTime(new Date(System.currentTimeMillis() + (10 * 60 * 1000)));
-        factoryBean.setRepeatCount(1);
-        factoryBean.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_REMAINING_COUNT);
         return factoryBean;
     }
 
@@ -87,18 +72,6 @@ public class SchedulerConfig {
         factoryBean.setCronExpression(cronExpression);
         factoryBean.setName(triggerName);
         factoryBean.setStartDelay(0L);
-        factoryBean.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
-        return factoryBean;
-    }
-
-    static CronTriggerFactoryBean createCronTriggerWithData(JobDetail jobDetail, String cronExpression, String triggerName, Map<String, Integer> category_id) {
-        LOG.debug("Called createTrigger(jobDetail={}, cronExpr={},triggerName={}", jobDetail.toString(), cronExpression, triggerName);
-        CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
-        factoryBean.setJobDetail(jobDetail);
-        factoryBean.setCronExpression(cronExpression);
-        factoryBean.setName(triggerName);
-        factoryBean.setStartDelay(0L);
-        factoryBean.setJobDataAsMap(category_id);
         factoryBean.setMisfireInstruction(CronTrigger.MISFIRE_INSTRUCTION_DO_NOTHING);
         return factoryBean;
     }

@@ -13,6 +13,7 @@ public class Ingredient {
     private Long id;
     private String name;
     private String amount;
+    private Integer type;
     private Recipe recipe;
 
     public Ingredient() {
@@ -21,6 +22,7 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_id")
+    @JsonIgnore
     public Long getId() {
         return id;
     }
@@ -45,6 +47,15 @@ public class Ingredient {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    @Column(name = "type")
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -79,7 +90,8 @@ public class Ingredient {
     @Override
     public String toString() {
         return "\n* Ingredient{" +
-                "name='" + name + '\'' +
-                ", amount='" + amount + "'}";
+                "name=" + name + ",\n" +
+                "  type=" + type + ",\n" +
+                "  amount=" + amount + "'}";
     }
 }
