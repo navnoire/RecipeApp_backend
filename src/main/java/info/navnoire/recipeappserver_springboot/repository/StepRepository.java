@@ -1,7 +1,6 @@
 package info.navnoire.recipeappserver_springboot.repository;
 
 import info.navnoire.recipeappserver_springboot.domain.Step;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 /**

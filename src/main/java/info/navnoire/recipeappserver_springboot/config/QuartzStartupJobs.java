@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class QuartzStartupJobs {
-    private static final String CRON_CATEGORY_TREE_SCRAPE = "0 24 16 ? * * *";
+    private static final String CRON_CATEGORY_TREE_SCRAPE = "0 0 2 ? * * *";
 
     @Bean("categoryTreeScrape")
     public JobDetailFactoryBean jobCategoryTreeScrape() {

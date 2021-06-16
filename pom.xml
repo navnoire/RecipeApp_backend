@@ -15,7 +15,7 @@
     <name>RecipeApp</name>
     <description>Recipe app with Spring Boot</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -78,12 +78,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.11.4</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--            <version>8.0.24</version>-->
-<!--        </dependency>-->
-
     </dependencies>
 
     <build>

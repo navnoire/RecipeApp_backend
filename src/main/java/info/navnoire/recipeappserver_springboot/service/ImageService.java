@@ -4,9 +4,7 @@ import info.navnoire.recipeappserver_springboot.constants.ScraperConstants;
 import info.navnoire.recipeappserver_springboot.domain.Recipe;
 import info.navnoire.recipeappserver_springboot.domain.Step;
 import info.navnoire.recipeappserver_springboot.service.scraper.ImageScraper;
-import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

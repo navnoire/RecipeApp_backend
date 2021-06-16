@@ -1,7 +1,5 @@
 package info.navnoire.recipeappserver_springboot.service.scraper;
 
-import info.navnoire.recipeappserver_springboot.domain.Recipe;
-
 import java.io.IOException;
 
 /**

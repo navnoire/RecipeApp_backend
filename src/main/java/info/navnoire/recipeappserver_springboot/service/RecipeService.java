@@ -1,7 +1,6 @@
 package info.navnoire.recipeappserver_springboot.service;
 
 import info.navnoire.recipeappserver_springboot.domain.Recipe;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 

@@ -3,7 +3,6 @@ package info.navnoire.recipeappserver_springboot.service;
 import info.navnoire.recipeappserver_springboot.domain.Category;
 import info.navnoire.recipeappserver_springboot.repository.CategoryRepository;
 import info.navnoire.recipeappserver_springboot.service.scraper.CategoryTreeScraper;
-import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

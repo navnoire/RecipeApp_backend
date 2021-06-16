@@ -1,8 +1,6 @@
 package info.navnoire.recipeappserver_springboot.service;
 
 import info.navnoire.recipeappserver_springboot.domain.Category;
-import info.navnoire.recipeappserver_springboot.domain.Recipe;
-import org.quartz.JobExecutionException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
