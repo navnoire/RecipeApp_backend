@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.domain;
+package info.navnoire.recipeappserver_springboot.domain.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,7 +16,7 @@ import java.util.Set;
  */
 
 @Entity(name = "recipe")
-@Table(name = "recipe")
+@Table(name = "recipe", schema = "recipeapp_db")
 public class Recipe {
     private Integer id;
     private String title;

@@ -1,6 +1,6 @@
-package info.navnoire.recipeappserver_springboot.repository;
+package info.navnoire.recipeappserver_springboot.repository.recipe;
 
-import info.navnoire.recipeappserver_springboot.domain.Step;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Step;
 import org.springframework.data.repository.CrudRepository;
 
 /**

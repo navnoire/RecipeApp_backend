@@ -1,7 +1,7 @@
 package info.navnoire.recipeappserver_springboot.service.scraper;
 
 import info.navnoire.recipeappserver_springboot.constants.ScraperConstants;
-import info.navnoire.recipeappserver_springboot.domain.Category;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;

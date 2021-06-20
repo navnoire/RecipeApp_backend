@@ -1,11 +1,11 @@
 package info.navnoire.recipeappserver_springboot.service.scraper;
 
-import info.navnoire.recipeappserver_springboot.domain.Category;
-import info.navnoire.recipeappserver_springboot.domain.Ingredient;
-import info.navnoire.recipeappserver_springboot.domain.Recipe;
-import info.navnoire.recipeappserver_springboot.domain.Step;
-import info.navnoire.recipeappserver_springboot.repository.CategoryRepository;
-import info.navnoire.recipeappserver_springboot.repository.RecipeRepository;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Ingredient;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Recipe;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Step;
+import info.navnoire.recipeappserver_springboot.repository.recipe.CategoryRepository;
+import info.navnoire.recipeappserver_springboot.repository.recipe.RecipeRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jsoup.nodes.Document;

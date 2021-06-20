@@ -1,6 +1,6 @@
-package info.navnoire.recipeappserver_springboot.repository;
+package info.navnoire.recipeappserver_springboot.repository.recipe;
 
-import info.navnoire.recipeappserver_springboot.domain.Category;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

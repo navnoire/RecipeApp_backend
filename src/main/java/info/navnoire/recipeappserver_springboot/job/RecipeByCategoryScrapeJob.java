@@ -1,7 +1,7 @@
 package info.navnoire.recipeappserver_springboot.job;
 
-import info.navnoire.recipeappserver_springboot.domain.Category;
-import info.navnoire.recipeappserver_springboot.domain.Recipe;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Recipe;
 import info.navnoire.recipeappserver_springboot.service.CategoryService;
 import info.navnoire.recipeappserver_springboot.service.ImageService;
 import info.navnoire.recipeappserver_springboot.service.RecipeService;

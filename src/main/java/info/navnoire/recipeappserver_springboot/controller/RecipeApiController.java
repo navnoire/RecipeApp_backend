@@ -1,6 +1,6 @@
 package info.navnoire.recipeappserver_springboot.controller;
 
-import info.navnoire.recipeappserver_springboot.domain.Recipe;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Recipe;
 import info.navnoire.recipeappserver_springboot.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -30,6 +31,7 @@ public class RecipeApiController {
     }
 
     @GetMapping
+    @PreAuthorize(value = "hasAuthority('USER')")
     public ResponseEntity<Map<String, Object>> listAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "30") int size) {

@@ -1,7 +1,7 @@
 package info.navnoire.recipeappserver_springboot.service;
 
-import info.navnoire.recipeappserver_springboot.domain.Recipe;
-import info.navnoire.recipeappserver_springboot.repository.RecipeRepository;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Recipe;
+import info.navnoire.recipeappserver_springboot.repository.recipe.RecipeRepository;
 import info.navnoire.recipeappserver_springboot.service.scraper.RecipeScraper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

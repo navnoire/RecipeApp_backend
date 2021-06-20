@@ -1,6 +1,6 @@
 package info.navnoire.recipeappserver_springboot.controller;
 
-import info.navnoire.recipeappserver_springboot.repository.StepRepository;
+import info.navnoire.recipeappserver_springboot.repository.recipe.StepRepository;
 import info.navnoire.recipeappserver_springboot.service.ImageService;
 import info.navnoire.recipeappserver_springboot.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;

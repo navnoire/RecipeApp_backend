@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.domain;
+package info.navnoire.recipeappserver_springboot.domain.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,7 +10,7 @@ import java.util.Objects;
  * Created by Victoria Berezina on 30/04/2021 in recipeApp_spring project
  */
 @Entity(name = "step")
-@Table(name = "step")
+@Table(name = "step", schema = "recipeapp_db")
 public class Step {
     private Long id;
     private String imageUrl;

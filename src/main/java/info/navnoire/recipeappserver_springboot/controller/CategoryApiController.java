@@ -1,6 +1,6 @@
 package info.navnoire.recipeappserver_springboot.controller;
 
-import info.navnoire.recipeappserver_springboot.domain.Category;
+import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
 import info.navnoire.recipeappserver_springboot.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.domain;
+package info.navnoire.recipeappserver_springboot.domain.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Created by Victoria Berezina on 11/05/2021 in RecipeAppServer_SpringBoot project
  */
 @Entity(name = "ingredient")
-@Table(name = "ingredient")
+@Table(name = "ingredient", schema = "recipeapp_db")
 public class Ingredient {
     private Long id;
     private String name;
