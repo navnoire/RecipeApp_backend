@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**
- * Created by Victoria Berezina on 19/06/2021 in RecipeApp project
- */
 @Component
 public class JwtUtils {
     private static final Logger LOG = LoggerFactory.getLogger(JwtUtils.class);

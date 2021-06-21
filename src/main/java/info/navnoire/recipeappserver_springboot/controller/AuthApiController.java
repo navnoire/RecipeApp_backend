@@ -1,12 +1,13 @@
 package info.navnoire.recipeappserver_springboot.controller;
 
+import info.navnoire.recipeappserver_springboot.controller.payload.response.ErrorMessageResponse;
 import info.navnoire.recipeappserver_springboot.domain.user.Role;
 import info.navnoire.recipeappserver_springboot.domain.user.Role.ERole;
 import info.navnoire.recipeappserver_springboot.domain.user.User;
-import info.navnoire.recipeappserver_springboot.payload.request.LoginRequest;
-import info.navnoire.recipeappserver_springboot.payload.request.SignupRequest;
-import info.navnoire.recipeappserver_springboot.payload.response.JwtResponse;
-import info.navnoire.recipeappserver_springboot.payload.response.MessageResponse;
+import info.navnoire.recipeappserver_springboot.controller.payload.request.LoginRequest;
+import info.navnoire.recipeappserver_springboot.controller.payload.request.SignupRequest;
+import info.navnoire.recipeappserver_springboot.controller.payload.response.JwtResponse;
+import info.navnoire.recipeappserver_springboot.controller.payload.response.MessageResponse;
 import info.navnoire.recipeappserver_springboot.repository.user.RoleRepository;
 import info.navnoire.recipeappserver_springboot.repository.user.UserRepository;
 import info.navnoire.recipeappserver_springboot.security.UserDetailsImpl;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -107,6 +109,6 @@ public class AuthApiController {
         user.setRoles(roleSet);
         userRepository.save(user);
 
-        return new ResponseEntity<>(new MessageResponse("User registered successfully!"), HttpStatus.OK);
+        return new ResponseEntity<>(new ErrorMessageResponse(HttpStatus.OK.value(), new Date(), "User registered successfully!"), HttpStatus.OK);
     }
 }

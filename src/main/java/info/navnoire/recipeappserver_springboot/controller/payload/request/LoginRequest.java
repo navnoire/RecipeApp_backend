@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.payload.request;
+package info.navnoire.recipeappserver_springboot.controller.payload.request;
 
 import javax.validation.constraints.NotBlank;
 

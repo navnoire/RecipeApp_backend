@@ -1,9 +1,8 @@
-package info.navnoire.recipeappserver_springboot.payload.request;
+package info.navnoire.recipeappserver_springboot.controller.payload.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 /**
  * Created by Victoria Berezina on 20/06/2021 in RecipeApp project

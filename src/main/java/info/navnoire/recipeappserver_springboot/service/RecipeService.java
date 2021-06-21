@@ -6,12 +6,13 @@ import org.springframework.data.domain.Slice;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Victoria Berezina on 07/05/2021 in RecipesAppServer project
  */
 public interface RecipeService {
-    Recipe findFullRecipeById(int id);
+    Optional<Recipe> findFullRecipeById(int id);
     Slice<Recipe> findByCategoryPage(int id, Pageable pageable);
     Slice<Recipe> findByTitlePage(String title, Pageable pageable);
     Slice<Recipe> findAllPage(Pageable pageable);

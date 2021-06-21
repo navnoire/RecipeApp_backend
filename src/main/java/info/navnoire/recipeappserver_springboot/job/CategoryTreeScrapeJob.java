@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Date;
 
-/**
- * Created by Victoria Berezina on 18/05/2021 in RecipeAppServer_SpringBoot project
- */
 @Component
 public class CategoryTreeScrapeJob implements Job {
     private CategoryService categoryService;

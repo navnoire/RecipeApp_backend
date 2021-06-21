@@ -15,10 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-/**
- * Created by Victoria Berezina on 21/06/2021 in RecipeApp project
- */
-
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(

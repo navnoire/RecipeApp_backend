@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.payload.response;
+package info.navnoire.recipeappserver_springboot.controller.payload.response;
 
 import java.util.List;
 

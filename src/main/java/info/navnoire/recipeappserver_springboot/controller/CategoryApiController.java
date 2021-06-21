@@ -26,7 +26,7 @@ public class CategoryApiController {
     }
 
     @GetMapping(path = "/child/{id}")
-    public List<Category> childOf (@PathVariable("id") int id) {
+    public List<Category> getChildOf(@PathVariable("id") int id) {
         return categoryService.findChildCategories(id);
     }
 

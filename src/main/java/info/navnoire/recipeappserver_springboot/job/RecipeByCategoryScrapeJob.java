@@ -56,6 +56,7 @@ public class RecipeByCategoryScrapeJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException{
         LOG.info("Job ** {} ** starting @ {} in {}", context.getJobDetail().getKey().getName(), context.getFireTime(), Thread.currentThread().getName());
         List<Recipe> newRecipes;
+        Scheduler scheduler = context.getScheduler();
         try {
             newRecipes = recipeService.scrapeRecipesInCategory(categoryList.get(index));
             imageService.scrapeImagesFromUrlToStorage(newRecipes);

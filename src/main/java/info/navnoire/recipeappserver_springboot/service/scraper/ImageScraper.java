@@ -7,4 +7,5 @@ import java.io.IOException;
  */
 public interface ImageScraper {
     void scrapeImageToStorage(String imageUrl) throws IOException;
+    String getImageStoragePath();
 }

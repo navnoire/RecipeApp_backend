@@ -15,8 +15,6 @@ import org.springframework.stereotype.Repository;
 public interface RecipeRepository extends CrudRepository<Recipe, Integer> {
     Slice<Recipe> findAll(Pageable pageable);
 
-    Recipe findById(int id);
-
     @Query("select distinct r from recipe r join r.categories c where c.id=?1")
     Slice<Recipe> findByCategory(int category_id, Pageable pageable);
 

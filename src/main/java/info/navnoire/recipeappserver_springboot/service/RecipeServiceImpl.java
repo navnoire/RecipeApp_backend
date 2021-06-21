@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  * Created by Victoria Berezina on 07/05/2021 in RecipesAppServer project
@@ -36,15 +37,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @Transactional(readOnly = true)
-    public Recipe findFullRecipeById(int id) throws NoSuchElementException {
-        Recipe recipe = recipeRepository.findById(id);
-        try {
-            Hibernate.initialize(recipe.getIngredients());
-            Hibernate.initialize(recipe.getSteps());
-            return recipe;
-        } catch (NullPointerException npe) {
-            throw new NoSuchElementException("Recipe " + id + " does not exists.");
-        }
+    public Optional<Recipe> findFullRecipeById(int id) {
+        return recipeRepository.findById(id);
     }
 
     @Override

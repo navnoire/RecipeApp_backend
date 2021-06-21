@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.payload.response;
+package info.navnoire.recipeappserver_springboot.controller.payload.response;
 
 /**
  * Created by Victoria Berezina on 20/06/2021 in RecipeApp project

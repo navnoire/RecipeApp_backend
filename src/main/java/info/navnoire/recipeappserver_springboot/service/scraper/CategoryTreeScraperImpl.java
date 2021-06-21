@@ -1,6 +1,5 @@
 package info.navnoire.recipeappserver_springboot.service.scraper;
 
-import info.navnoire.recipeappserver_springboot.constants.ScraperConstants;
 import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,9 +16,10 @@ import java.util.Queue;
  */
 @Service
 public class CategoryTreeScraperImpl implements CategoryTreeScraper {
+    private static final String CATEGORY_ROOT_URL = "https://gotovim-doma.ru/recipes";
 
     public List<Category> scrapeAll() throws IOException {
-        List<Category> initialCategories = fetchCategories(ScraperConstants.CATEGORY_ROOT_URL, true);
+        List<Category> initialCategories = fetchCategories(CATEGORY_ROOT_URL, true);
         Queue<String> urlQueue = new PriorityQueue<>();
         urlQueue.addAll(getUrls(initialCategories));
 

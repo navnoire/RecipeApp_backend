@@ -7,14 +7,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import static info.navnoire.recipeappserver_springboot.constants.ScraperConstants.IMAGES_ROOT_URL;
-import static info.navnoire.recipeappserver_springboot.constants.ScraperConstants.IMAGE_LOCAL_STORAGE_PATH;
-
-/**
- * Created by Victoria Berezina on 16/05/2021 in RecipeAppServer_SpringBoot project
- */
 @Component
 public class ImageScraperImpl implements ImageScraper {
+    private static final String IMAGE_LOCAL_STORAGE_PATH = System.getProperty("user.home") + "/recipeapp/images/";
+    private static final String IMAGES_ROOT_URL = "https://gotovim-doma.ru/images/recipe/";
+
 
     @Override
     public void scrapeImageToStorage(String imageUrl) throws IOException {
@@ -23,5 +20,10 @@ public class ImageScraperImpl implements ImageScraper {
         String pathName = IMAGE_LOCAL_STORAGE_PATH + imageUrl;
         File file = new File(pathName);
         FileUtils.copyURLToFile(url, file);
+    }
+
+    @Override
+    public String getImageStoragePath() {
+        return IMAGE_LOCAL_STORAGE_PATH;
     }
 }

@@ -18,14 +18,14 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-public class SchedulerConfig {
+public class SchedulerConfiguration {
     private final ApplicationContext applicationContext;
 
-    public SchedulerConfig(ApplicationContext applicationContext) {
+    public SchedulerConfiguration(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
-    public static final Logger LOG = LoggerFactory.getLogger(SchedulerConfig.class);
+    public static final Logger LOG = LoggerFactory.getLogger(SchedulerConfiguration.class);
 
     @Bean
     public JobFactory jobFactory() {

@@ -14,7 +14,5 @@ public interface CategoryService {
     Page<Category> findAllPage(Pageable pageable);
     List<Category> findChildCategories(int parent_id);
     void scrapeAllCategories() throws IOException;
-
     void save(Category category);
-    void delete(int id);
 }
