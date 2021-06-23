@@ -11,10 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by Victoria Berezina on 30/04/2021 in recipeApp_spring project
- */
-
 @Entity(name = "recipe")
 @Table(name = "recipe", schema = "recipeapp_db")
 public class Recipe {

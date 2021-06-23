@@ -2,9 +2,8 @@ package info.navnoire.recipeappserver_springboot.service;
 
 import info.navnoire.recipeappserver_springboot.domain.recipe.Recipe;
 import info.navnoire.recipeappserver_springboot.domain.recipe.Step;
-import info.navnoire.recipeappserver_springboot.service.scraper.ImageScraper;
+import info.navnoire.recipeappserver_springboot.scraper.ImageScraper;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

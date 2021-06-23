@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.service.scraper;
+package info.navnoire.recipeappserver_springboot.scraper;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -8,9 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-/**
- * Created by Victoria Berezina on 14/05/2021 in RecipeAppServer_SpringBoot project
- */
 public interface Scraper {
     Logger LOG = LoggerFactory.getLogger(Scraper.class);
 

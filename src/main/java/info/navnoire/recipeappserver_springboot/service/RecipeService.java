@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by Victoria Berezina on 07/05/2021 in RecipesAppServer project
- */
 public interface RecipeService {
     Optional<Recipe> findFullRecipeById(int id);
     Slice<Recipe> findByCategoryPage(int id, Pageable pageable);

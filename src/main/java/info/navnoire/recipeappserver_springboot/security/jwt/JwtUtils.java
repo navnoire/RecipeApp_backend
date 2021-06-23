@@ -17,15 +17,19 @@ public class JwtUtils {
     @Value("${recipe.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${recipe.app.jwtExpirationMs}")
-    private int jwtExpirationMs;
+    @Value("${recipe.app.jwtAccessExpirationMs}")
+    private int jwtAccessExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        return generateJwtTokenFromUsername(userPrincipal.getUsername());
+    }
+
+    public String generateJwtTokenFromUsername(String username) {
         return Jwts.builder()
-                .setSubject(userPrincipal.getUsername())
+                .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpirationMs))
+                .setExpiration(new Date(new Date().getTime() + jwtAccessExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

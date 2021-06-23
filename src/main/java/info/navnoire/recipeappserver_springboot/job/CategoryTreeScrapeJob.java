@@ -12,6 +12,9 @@ import java.util.Date;
 
 @Component
 public class CategoryTreeScrapeJob implements Job {
+    private static final Logger LOG = LoggerFactory.getLogger(CategoryTreeScrapeJob.class);
+    private static final Long RESCHEDULE_INTERVAL = 2 * 60 * 1000L;
+
     private CategoryService categoryService;
 
     @Autowired
@@ -19,37 +22,39 @@ public class CategoryTreeScrapeJob implements Job {
         this.categoryService = categoryService;
     }
 
-    public static final Logger LOG = LoggerFactory.getLogger(CategoryTreeScrapeJob.class);
-
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         LOG.info("Job ** {} ** starting @ {} in {}", context.getJobDetail().getKey().getName(), context.getFireTime(), Thread.currentThread().getName());
         try {
             categoryService.scrapeAllCategories();
         } catch (IOException ioe) {
-            SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger().forJob(context.getJobDetail())
-                    .withIdentity("rescheduleTrigger", "RESCHEDULER")
-                    .startAt(new Date(System.currentTimeMillis() + (2 * 60 * 1000)))
-                    .build();
-            try {
-                if (context.getTrigger().getKey().getName().equals("Category tree scrape trigger")) {
-                    context.getScheduler().triggerJob(context.getJobDetail().getKey());
-
-                } else {
-                    context.getScheduler().rescheduleJob(context.getTrigger().getKey(), trigger);
-                    LOG.info("Job ** {} ** execution failed.  Reschedule @ {}", context.getJobDetail().getKey().getName(), trigger.getNextFireTime());
-                }
-            } catch (SchedulerException e) {
-                e.printStackTrace();
-            }
+            rescheduleJob(context);
             throw new JobExecutionException(ioe.getMessage());
         }
         LOG.info("Job ** {} ** completed successfully", context.getJobDetail().getKey().getName());
+
+        //Start recipe by category scraping
         try {
             context.getScheduler().triggerJob(new JobKey("Recipe by category scrape job"));
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
+    }
 
+    private void rescheduleJob(JobExecutionContext context)  {
+        SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger().forJob(context.getJobDetail())
+                .withIdentity("rescheduleTrigger", "RESCHEDULE")
+                .startAt(new Date(System.currentTimeMillis() + (RESCHEDULE_INTERVAL)))
+                .build();
+        try {
+            if (context.getTrigger().getKey().getName().equals("Category tree scrape trigger")) {
+                context.getScheduler().triggerJob(context.getJobDetail().getKey());
+            } else {
+                context.getScheduler().rescheduleJob(context.getTrigger().getKey(), trigger);
+                LOG.info("Job ** {} ** execution failed.  Reschedule @ {}", context.getJobDetail().getKey().getName(), trigger.getNextFireTime());
+            }
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 }

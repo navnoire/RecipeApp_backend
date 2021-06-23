@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.service.scraper;
+package info.navnoire.recipeappserver_springboot.scraper;
 
 import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
 import org.jsoup.nodes.Document;
@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-/**
- * Created by Victoria Berezina on 01/05/2021 in Scrapers project
- */
 @Service
 public class CategoryTreeScraperImpl implements CategoryTreeScraper {
     private static final String CATEGORY_ROOT_URL = "https://gotovim-doma.ru/recipes";

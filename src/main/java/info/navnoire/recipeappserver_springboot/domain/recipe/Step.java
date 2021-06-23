@@ -6,9 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.persistence.*;
 import java.util.Objects;
 
-/**
- * Created by Victoria Berezina on 30/04/2021 in recipeApp_spring project
- */
 @Entity(name = "step")
 @Table(name = "step", schema = "recipeapp_db")
 public class Step {

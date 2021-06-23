@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * Created by Victoria Berezina on 09/05/2021 in RecipesAppServer project
- */
 @RestController
 @RequestMapping("/api/category")
 public class CategoryApiController {

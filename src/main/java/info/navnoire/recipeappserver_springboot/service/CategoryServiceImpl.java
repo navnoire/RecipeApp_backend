@@ -2,7 +2,7 @@ package info.navnoire.recipeappserver_springboot.service;
 
 import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
 import info.navnoire.recipeappserver_springboot.repository.recipe.CategoryRepository;
-import info.navnoire.recipeappserver_springboot.service.scraper.CategoryTreeScraper;
+import info.navnoire.recipeappserver_springboot.scraper.CategoryTreeScraper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by Victoria Berezina on 09/05/2021 in RecipesAppServer project
- */
 @Transactional
 @Service("categoryService")
 public class CategoryServiceImpl implements CategoryService {

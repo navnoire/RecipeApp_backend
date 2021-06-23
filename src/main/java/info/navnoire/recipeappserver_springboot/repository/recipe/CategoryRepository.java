@@ -9,9 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by Victoria Berezina on 09/05/2021 in RecipesAppServer project
- */
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Integer> {
     Page<Category> findAll(Pageable pageable);

@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-/**
- * Created by Victoria Berezina on 11/05/2021 in RecipeAppServer_SpringBoot project
- */
 @Entity(name = "ingredient")
 @Table(name = "ingredient", schema = "recipeapp_db")
 public class Ingredient {

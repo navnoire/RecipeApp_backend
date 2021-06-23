@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.service.scraper;
+package info.navnoire.recipeappserver_springboot.scraper;
 
 import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
 import info.navnoire.recipeappserver_springboot.domain.recipe.Ingredient;
@@ -17,9 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Victoria Berezina on 01/05/2021 in Scrapers project
- */
 @Service
 public class RecipeScraperImpl implements RecipeScraper {
     private static final Log LOG = LogFactory.getLog(RecipeScraperImpl.class);
@@ -116,12 +113,11 @@ public class RecipeScraperImpl implements RecipeScraper {
         Document document = getDocument(startFrom);
         int lastPage = 1;
 
-        try {
+        if(document.hasClass("pager")) {
             lastPage = Integer.parseInt(document.getElementsByClass("pager").
                     first().getElementsByClass("last").first().text());
-        } catch (NullPointerException npe) {
-            System.out.println("There is just one page in category");
         }
+
         return lastPage;
     }
 

@@ -4,9 +4,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-/**
- * Created by Victoria Berezina on 20/06/2021 in RecipeApp project
- */
 public class SignupRequest {
     @NotBlank
     @Size(min = 3, max = 20)

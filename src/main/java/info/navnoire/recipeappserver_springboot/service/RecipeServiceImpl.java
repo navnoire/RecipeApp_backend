@@ -2,10 +2,9 @@ package info.navnoire.recipeappserver_springboot.service;
 
 import info.navnoire.recipeappserver_springboot.domain.recipe.Recipe;
 import info.navnoire.recipeappserver_springboot.repository.recipe.RecipeRepository;
-import info.navnoire.recipeappserver_springboot.service.scraper.RecipeScraper;
+import info.navnoire.recipeappserver_springboot.scraper.RecipeScraper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -14,12 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-/**
- * Created by Victoria Berezina on 07/05/2021 in RecipesAppServer project
- */
 @Transactional
 @Service("recipeService")
 public class RecipeServiceImpl implements RecipeService {
@@ -27,12 +22,10 @@ public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final RecipeScraper recipeScraper;
-    private final ImageService imageService;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeScraper recipeScraper, ImageService imageService) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeScraper recipeScraper) {
         this.recipeRepository = recipeRepository;
         this.recipeScraper = recipeScraper;
-        this.imageService = imageService;
     }
 
     @Override

@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by Victoria Berezina on 19/06/2021 in RecipeApp project
- */
-
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 

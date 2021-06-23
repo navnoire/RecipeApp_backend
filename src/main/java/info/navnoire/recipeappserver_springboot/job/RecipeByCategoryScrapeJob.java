@@ -16,20 +16,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by Victoria Berezina on 18/05/2021 in RecipeAppServer_SpringBoot project
- */
 @Component
 @DisallowConcurrentExecution
 @PersistJobDataAfterExecution
 public class RecipeByCategoryScrapeJob implements Job {
+    private static final Long RESCHEDULE_INTERVAL = 5 * 60 * 1000L;
     private static final Logger LOG = LoggerFactory.getLogger(RecipeByCategoryScrapeJob.class);
+
     private RecipeService recipeService;
     private CategoryService categoryService;
     private ImageService imageService;
     private int index;
 
-    private List<Integer> categoryList ;
+    private List<Integer> categoryList;
 
     @Autowired
     public void setCategoryService(CategoryService categoryService) {
@@ -53,47 +52,52 @@ public class RecipeByCategoryScrapeJob implements Job {
 
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException{
+    public void execute(JobExecutionContext context) throws JobExecutionException {
         LOG.info("Job ** {} ** starting @ {} in {}", context.getJobDetail().getKey().getName(), context.getFireTime(), Thread.currentThread().getName());
         List<Recipe> newRecipes;
-        Scheduler scheduler = context.getScheduler();
         try {
             newRecipes = recipeService.scrapeRecipesInCategory(categoryList.get(index));
             imageService.scrapeImagesFromUrlToStorage(newRecipes);
         } catch (IOException ioe) {
-            SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger().forJob(context.getJobDetail())
-                    .withIdentity("rescheduleTrigger", "RESCHEDULER")
-                    .startAt(new Date(System.currentTimeMillis() + (2 * 60 * 1000)))
-                    .build();
-            try {
-                    context.getScheduler().rescheduleJob(context.getTrigger().getKey(), trigger);
-                    LOG.info("Job ** {} ** execution failed.  Reschedule @ {}",
-                            context.getJobDetail().getKey().getName(), trigger.getNextFireTime());
-
-            } catch (SchedulerException e) {
-                e.printStackTrace();
-            }
+            rescheduleJob(context);
             throw new JobExecutionException(ioe.getMessage());
         }
 
         LOG.info("Job ** {} ** completed. Category {} scraped, added {} new recipes",
-                context.getJobDetail().getKey().getName(), categoryList.get(index), newRecipes.size());
-        if(index < categoryList.size() - 1) {
-            // if there are categories to scrape
+                context.getJobDetail().getKey().getName(),
+                categoryList.get(index),
+                newRecipes.size());
+
+        // if there is another category to scrape
+        if (index < categoryList.size() - 1) {
             context.getJobDetail().getJobDataMap().put("index", index + 1);
             try {
                 context.getScheduler().triggerJob(context.getJobDetail().getKey());
             } catch (SchedulerException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             context.getJobDetail().getJobDataMap().put("index", 0);
-            LOG.info("Scraping recipes finished");
+            LOG.info("Recipe scraping finished");
         }
     }
 
     private List<Integer> initCategoryList() {
         return categoryService.findChildCategories(0).stream().map(Category::getId).collect(Collectors.toList());
+    }
+
+    private void rescheduleJob(JobExecutionContext context) {
+        SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger().forJob(context.getJobDetail())
+                .withIdentity("rescheduleTrigger", "RESCHEDULE")
+                .startAt(new Date(System.currentTimeMillis() + (RESCHEDULE_INTERVAL)))
+                .build();
+        try {
+            context.getScheduler().rescheduleJob(context.getTrigger().getKey(), trigger);
+            LOG.info("Job ** {} ** execution failed.  Reschedule @ {}",
+                    context.getJobDetail().getKey().getName(), trigger.getNextFireTime());
+
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 }

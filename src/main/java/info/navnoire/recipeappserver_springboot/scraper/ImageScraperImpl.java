@@ -1,4 +1,4 @@
-package info.navnoire.recipeappserver_springboot.service.scraper;
+package info.navnoire.recipeappserver_springboot.scraper;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;

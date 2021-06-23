@@ -8,9 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- * Created by Victoria Berezina on 05/05/2021 in RecipesAppServer project
- */
 @Repository
 public interface RecipeRepository extends CrudRepository<Recipe, Integer> {
     Slice<Recipe> findAll(Pageable pageable);

@@ -1,13 +1,10 @@
-package info.navnoire.recipeappserver_springboot.service.scraper;
+package info.navnoire.recipeappserver_springboot.scraper;
 
 import info.navnoire.recipeappserver_springboot.domain.recipe.Category;
 
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by Victoria Berezina on 14/05/2021 in RecipeAppServer_SpringBoot project
- */
 public interface CategoryTreeScraper extends Scraper {
     List<Category> scrapeAll() throws IOException;
 }

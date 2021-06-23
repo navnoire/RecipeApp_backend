@@ -7,9 +7,6 @@ import org.springframework.data.domain.Pageable;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by Victoria Berezina on 09/05/2021 in RecipesAppServer project
- */
 public interface CategoryService {
     Page<Category> findAllPage(Pageable pageable);
     List<Category> findChildCategories(int parent_id);

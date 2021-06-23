@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Victoria Berezina on 09/05/2021 in RecipesAppServer project
- */
 @RestController
 @RequestMapping("/api/recipe")
 public class RecipeApiController {

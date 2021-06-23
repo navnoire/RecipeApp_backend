@@ -2,10 +2,6 @@ package info.navnoire.recipeappserver_springboot.domain.user;
 
 import javax.persistence.*;
 
-/**
- * Created by Victoria Berezina on 17/06/2021 in RecipeApp project
- */
-
 @Entity
 @Table(schema = "recipeapp_users", name = "roles")
 public class Role {

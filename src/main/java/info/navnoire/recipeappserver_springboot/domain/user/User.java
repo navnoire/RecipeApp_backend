@@ -7,10 +7,6 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by Victoria Berezina on 17/06/2021 in RecipeApp project
- */
-
 @Entity
 @Table(name = "users", schema = "recipeapp_users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username"),
@@ -20,7 +16,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "username")
     @NotBlank
@@ -53,11 +49,11 @@ public class User {
         this.password = password;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
